@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGPA Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .calculator-form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        .calculator-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .calculator-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .calculator-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .calculator-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .calculator-form button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <form class="calculator-form" id="cgpaForm">
+        <h2>CGPA Calculator</h2>
+
+        <div id="subjectInputs">
+            <label for="subject1">Subject 1 GPA:</label>
+            <input type="number" id="subject1" name="subject1" step="0.01" min="0.01" max="4" required>
+
+            <label for="subject2">Subject 2 GPA:</label>
+            <input type="number" id="subject2" name="subject2" step="0.01" min="0.01" max="4" required>
+
+            <label for="subject3">Subject 3 GPA:</label>
+            <input type="number" id="subject3" name="subject3" step="0.01" min="0.01" max="4" required>
+
+            <label for="subject4">Subject 4 GPA:</label>
+            <input type="number" id="subject4" name="subject4" step="0.01" min="0.01" max="4" required>
+
+            <label for="subject5">Subject 5 GPA:</label>
+            <input type="number" id="subject5" name="subject5" step="0.01" min="0.01" max="4" required>
+
+            <label for="subject6">Subject 6 GPA:</label>
+            <input type="number" id="subject6" name="subject6" step="0.01" min="0.01" max="4" required>
+        </div>
+
+        <button type="button" onclick="calculateCGPA()">Calculate CGPA</button>
+
+        <div class="result" id="result"></div>
+    </form>
+
+    <script>
+        function calculateCGPA() {
+            let totalGPA = 0;
+            let count = 0;
+            
+            for (let i = 1; i <= 6; i++) {
+                const subjectGPA = parseFloat(document.getElementById("subject" + i).value);
+
+                // Ensure GPA is within valid range
+                if (subjectGPA >= 0.01 && subjectGPA <= 4) {
+                    totalGPA += subjectGPA;
+                    count++;
+                } else {
+                    document.getElementById('result').innerText = "Please enter a GPA between 0.01 and 4 for all subjects.";
+                    return;
+                }
+            }
+
+            // Ensure that at least one GPA is entered
+            if (count === 0) {
+                document.getElementById('result').innerText = "Please enter valid GPAs for at least one subject.";
+                return;
+            }
+
+            // Calculate and display the CGPA
+            const cgpa = totalGPA / count;
+            
+            // Ensure the CGPA does not exceed 4
+            if (cgpa > 4) {
+                document.getElementById('result').innerText = "CGPA cannot be greater than 4.";
+            } else {
+                document.getElementById('result').innerText = "Your CGPA is: " + cgpa.toFixed(2);
+            }
+        }
+    </script>
+</body>
+</html>
